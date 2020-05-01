@@ -13,7 +13,10 @@ for i in range(n):
 
 i = 0
 while total > 0 and total%10 == 0:
-    total -= s[i]
+    if s[i]%10 != 0:
+        total -= s[i]
     i += 1
+    if i == n:
+        total = 0
 
 print(total)
