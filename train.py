@@ -1,1 +1,1 @@
-print(int(400/400))
+print(int(399/400))
