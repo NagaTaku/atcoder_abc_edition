@@ -1,7 +1,9 @@
+import math
+
 a, b, n = map(int, input().split())
 
 M = 0
-for x in range(n+1):
-    M = max(int(a*x/b)-(a*int(x/b)), M)
+t = min(b-1, n)
+M = math.floor(a*t/b) - a*math.floor(t/b)
 
 print(M)

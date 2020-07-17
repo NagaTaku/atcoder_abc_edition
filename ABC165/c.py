@@ -1,16 +1,31 @@
-def iter_p_adic(p, n):
-    '''
-    連続して増加するp進数をリストとして返す。nはリストの長さ
-    return
-    ----------
-    所望のp進数リストを次々返してくれるiterator
-    '''
-    from itertools import product
-    tmp = [range(p+1)] * n
-    return product(*tmp)
+def permutations(L):
 
+    if L == []:
+        return [[]]
+
+    else:
+        ret = []
+
+        # set（集合）型で重複を削除、ソート
+        S = sorted(set(L))
+
+        for i in S:
+
+            data = L[:]
+            data.remove(i)
+
+            for j in permutations(data):
+                ret.append([i] + j)
+
+        return ret
+        
 
 N, M, Q = map(int, input().split())
+
+bou = [1] * N
+ball = [2] * (M-1)
+
+junretsu = permutations(bou + ball)
 
 a, b, c, d = [], [], [], []
 for i in range(Q):
@@ -20,55 +35,19 @@ for i in range(Q):
     c.append(C)
     d.append(D)
 
-MAX = 0
-iterator = iter_p_adic(M,N)
-for idxs in iterator:
-    f = 0
-    #print(idxs)
-    A = list(idxs)
-    A = sorted(A)
-    for i in range(N):
-        if A[i] == 0:
-            f = 1
-            break
-    if f == 1:
-        continue
-    total = 0
-    for i in range(Q):
-        if c[i] == A[b[i]-1] - A[a[i]-1]:
-            total += d[i]
+ans = 0
+for i in range(len(junretsu)):
+    souwa = 0
+    check = 0
+    A = []
+    for j in range(N+M-1):
+        if junretsu[i][j] == 1:
+            A.append(j - check + 1)
+            check += 1
+    for j in range(Q):
+        if (A[b[j]-1] - A[a[j]-1]) == c[j]:
+            souwa += d[j]
     
-    MAX = max(MAX, total)
+    ans = max(ans, souwa)
 
-print(MAX)
-
-
-
-
-
-
-
-"""
-for i in range(N):
-    for j in range(M):
-        A[i] 
-
-
-
-A = [1]*N
-for i in range(N):
-    for j in range(i,M+1):
-    
-
-
-for i in range(1,M+1):
-    for j in range(i,M+1):
-        for p in range(j,M+1):
-            for q in range(p,M+1):
-
-3:4 20
-2:4 10
-4:2 5
-5:2 6
-3:3 10
-"""
+print(ans)
