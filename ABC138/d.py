@@ -1,4 +1,3 @@
-"""
 import sys
 sys.setrecursionlimit(10 ** 6)
 import sys
@@ -58,3 +57,4 @@ for i in range(q):
 str_counts = map(str, counts[1:])
 print(' '.join(str_counts))
 print(*counts[1:])
+"""
